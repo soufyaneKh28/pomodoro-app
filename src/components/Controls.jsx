@@ -125,7 +125,7 @@ export function DiscreteSlider() {
         <div className=" w-full pt-5 flex flex-col items-center justify-center">
           <h1 className=" font-bold text-white">Work</h1>
           <Slider
-            defaultValue={30}
+            defaultValue={25}
             getAriaValueText={valuetext}
             valueLabelDisplay="auto"
             step={5}
