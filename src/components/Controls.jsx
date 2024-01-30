@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   play_light,
   reset_dark,
@@ -10,6 +10,9 @@ import {
   pause_light,
 } from "../assets";
 import Button from "@mui/material/Button";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
 
 const Controls = ({ mode, toggleTimer, isActive, resetTimer }) => {
   const control = {
@@ -43,21 +46,68 @@ const Controls = ({ mode, toggleTimer, isActive, resetTimer }) => {
             className=" w-full object-contian"
           />
         </button>
-        <button
-          className={`" bg-secondary_color m-2 rounded-full p-4 h-[50px] flex justify-center items-center 
-        w-[50px] h-[50px]"
-      }  `}
-          onClick={""}
-        >
-          <img
-            src={mode ? settings_dark : settings_light}
-            alt={""}
-            className=" w-full object-contian"
-          />
-        </button>
+        <TemporaryDrawer mode={mode} />
       </div>
     </div>
   );
 };
+export function TemporaryDrawer({ mode }) {
+  const [state, setState] = React.useState({
+    left: false,
+  });
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+      className=" "
+    >
+      <div
+        className={`${
+          mode ? " bg-secondary_light" : " bg-main_dark"
+        } bg-main_color w-full h-[100vh] `}
+      ></div>
+    </Box>
+  );
+
+  let anchor = "right";
+
+  return (
+    <div className="flex items-center">
+      <React.Fragment key={anchor}>
+        <div
+          className=" cursor-pointer bg-secondary_color m-2 rounded-full p-4  flex justify-center items-center 
+        w-[50px] h-[50px]"
+          onClick={toggleDrawer(anchor, true)}
+        >
+          <img
+            src={mode ? settings_dark : settings_light}
+            alt="menu"
+            className=" w-full "
+          />
+        </div>
+        <Drawer
+          anchor={anchor}
+          open={state[anchor]}
+          onClose={toggleDrawer(anchor, false)}
+        >
+          {list(anchor)}
+        </Drawer>
+      </React.Fragment>
+    </div>
+  );
+}
 export default Controls;

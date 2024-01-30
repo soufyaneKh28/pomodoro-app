@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useState, useEffect } from "react";
 
 import "./index.css";
-import { Timer, Controls, Settings, Header } from "./components";
+import { Timer, Controls, Header } from "./components";
 
 function App() {
   const [mode, setMode] = useState(false);
@@ -72,8 +72,6 @@ function App() {
             resetTimer={resetTimer}
           />
         </div>
-
-        <Settings />
       </div>
     </div>
   );
