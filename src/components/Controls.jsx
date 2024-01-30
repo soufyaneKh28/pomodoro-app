@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import Slider from "@mui/material/Slider";
 
 const Controls = ({ mode, toggleTimer, isActive, resetTimer }) => {
   const control = {
@@ -71,7 +72,7 @@ export function TemporaryDrawer({ mode }) {
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
       className=" "
     >
@@ -79,7 +80,9 @@ export function TemporaryDrawer({ mode }) {
         className={`${
           mode ? " bg-secondary_light" : " bg-main_dark"
         } bg-main_color w-full h-[100vh] `}
-      ></div>
+      >
+        <DiscreteSlider />
+      </div>
     </Box>
   );
 
@@ -108,6 +111,31 @@ export function TemporaryDrawer({ mode }) {
         </Drawer>
       </React.Fragment>
     </div>
+  );
+}
+
+function valuetext(value) {
+  return `${value}°C`;
+}
+
+export function DiscreteSlider() {
+  return (
+    <Box sx={{ width: 200, margin: "auto", paddingTop: 20 }}>
+      <div className="flex justify-center w-full">
+        <div className=" w-full pt-5 flex flex-col items-center justify-center">
+          <h1 className=" font-bold text-white">Work</h1>
+          <Slider
+            defaultValue={30}
+            getAriaValueText={valuetext}
+            valueLabelDisplay="auto"
+            step={5}
+            marks
+            min={5}
+            max={60}
+          />
+        </div>
+      </div>
+    </Box>
   );
 }
 export default Controls;

@@ -6,7 +6,7 @@ import settings_dark from "./settings_dark.png";
 import settings_light from "./settings_light.png";
 import reset_dark from "./reset_dark.png";
 import reset_light from "./reset_light.png";
-
+import clock from './clock.mp3'
 export {
   play_dark,
   play_light,
@@ -16,4 +16,5 @@ export {
   settings_light,
   reset_dark,
   reset_light,
+  clock
 };

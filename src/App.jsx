@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import "./index.css";
 import { Timer, Controls, Header } from "./components";
+import { clock } from "./assets";
 
 function App() {
   const [mode, setMode] = useState(false);
@@ -13,7 +14,11 @@ function App() {
   function handleMode() {
     setMode(!mode);
   }
-
+  const audioRef = React.createRef();
+  const playSound = () => {
+    // Use the ref to play the audio
+    audioRef.current.play();
+  };
   useEffect(() => {
     let interval;
 
@@ -24,6 +29,7 @@ function App() {
         } else {
           if (minutes === 0) {
             // Timer is up, you can add a sound or other action here
+            playSound();
             resetTimer();
           } else {
             setMinutes(minutes - 1);
@@ -65,6 +71,8 @@ function App() {
             resetTimer={resetTimer}
             mode={mode}
           />
+          <audio ref={audioRef} src={clock} />
+
           <Controls
             mode={mode}
             toggleTimer={toggleTimer}
