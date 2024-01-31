@@ -8,8 +8,9 @@ import { clock } from "./assets";
 
 function App() {
   const [mode, setMode] = useState(false);
-  const [minutes, setMinutes] = useState(25);
+  const [minutes, setMinutes] = useState(2);
   const [seconds, setSeconds] = useState(0);
+  const [key, setKey] = useState(0);
   const [isActive, setIsActive] = useState(false);
   function handleMode() {
     setMode(!mode);
@@ -50,8 +51,9 @@ function App() {
 
   const resetTimer = () => {
     setIsActive(false);
-    setMinutes(25);
+    setMinutes(2);
     setSeconds(0);
+    setKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -70,6 +72,7 @@ function App() {
             isActive={isActive}
             resetTimer={resetTimer}
             mode={mode}
+            key={key}
           />
           <audio ref={audioRef} src={clock} />
 

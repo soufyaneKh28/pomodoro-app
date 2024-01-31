@@ -5,3 +5,11 @@
 .app {
   font-family: "Exo 2", sans-serif;
 }
+
+
+.circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round; /* Use round line cap for a smoother appearance */
+  transition: stroke-dashoffset 1s linear;
+}
