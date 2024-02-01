@@ -52,6 +52,10 @@ const Timer = ({
           colors={"#E63946"}
           colorsTime={[duration, 0]}
           strokeWidth={15}
+          onComplete={() => {
+            resetTimer();
+            return { shouldRepeat: true, delay: 1.5 }; // repeat animation in 1.5 seconds
+          }}
         >
           {children}
         </CountdownCircleTimer>

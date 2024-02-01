@@ -8,7 +8,7 @@ import { clock } from "./assets";
 
 function App() {
   const [mode, setMode] = useState(false);
-  const [minutes, setMinutes] = useState(25);
+  const [minutes, setMinutes] = useState(1);
 
   const [key, setKey] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -27,21 +27,24 @@ function App() {
     audioRef.current.play();
   };
   // useEffect(() => {
+  //   if (isActive) {
+  //     if (minutes === 0) {
+  //       playSound();
+
+  //       resetTimer();
+  //     }
+  //   }
+  // });
+  // useEffect(() => {
   //   let interval;
 
   //   if (isActive) {
   //     interval = setInterval(() => {
-  //       if (seconds > 0) {
-  //         setSeconds(seconds - 1);
-  //       } else {
-  //         if (minutes === 0) {
-  //           // Timer is up, you can add a sound or other action here
-  //           playSound();
-  //           resetTimer();
-  //         } else {
-  //           setMinutes(minutes - 1);
-  //           setSeconds(59);
-  //         }
+  //       if (minutes === 0) {
+  //         // Timer is up, you can add a sound or other action here
+  //         playSound();
+  //         setIsActive(false);
+  //         setKey((prevKey) => prevKey + 1);
   //       }
   //     }, 1000);
   //   } else {
@@ -49,7 +52,7 @@ function App() {
   //   }
 
   //   return () => clearInterval(interval);
-  // }, [isActive, minutes, seconds]);
+  // }, [isActive, minutes]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
@@ -57,7 +60,7 @@ function App() {
 
   const resetTimer = () => {
     setIsActive(false);
-    // setMinutes(25);
+    playSound();
     // setSeconds(0);
     setKey((prevKey) => prevKey + 1);
   };

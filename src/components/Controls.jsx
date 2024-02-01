@@ -78,7 +78,7 @@ export function TemporaryDrawer({
 }) {
   let anchor = "right";
   const [state, setState] = React.useState({
-    right: true,
+    right: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
