@@ -109,7 +109,7 @@ export function TemporaryDrawer({
         >
           <div
             className={`${
-              mode ? " bg-secondary_light" : " bg-main_dark"
+              mode ? " bg-white" : " bg-main_dark"
             } bg-main_color w-full h-[100vh] p-3 `}
           >
             <div>
@@ -120,6 +120,7 @@ export function TemporaryDrawer({
                 timeApplay={timeApplay}
                 toggleDrawer={toggleDrawer}
                 anchor={anchor}
+                mode={mode}
               />
               <div
                 className="flex justify-end mt-3 "
@@ -216,12 +217,17 @@ export function DiscreteSlider({
   timeApplay,
   toggleDrawer,
   anchor,
+  mode,
 }) {
   return (
     <Box sx={{ width: 200, margin: "auto", paddingTop: 20 }}>
       <div className="flex justify-center w-full">
         <div className=" w-full pt-5 flex flex-col items-center justify-center">
-          <h1 className=" font-bold text-white">Work</h1>
+          <h1
+            className={` font-bold ${mode ? "text-main_dark" : " text-white"} `}
+          >
+            Work
+          </h1>
           <PrettoSlider
             defaultValue={sliderValue}
             getAriaValueText={valuetext}
