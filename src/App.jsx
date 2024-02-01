@@ -8,10 +8,16 @@ import { clock } from "./assets";
 
 function App() {
   const [mode, setMode] = useState(false);
-  const [minutes, setMinutes] = useState(2);
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(25);
+  const [seconds, setSeconds] = useState(false);
   const [key, setKey] = useState(0);
   const [isActive, setIsActive] = useState(false);
+
+  const [sliderValue, setSliderValue] = React.useState(25);
+
+  const handleChange = (event, newValue) => {
+    setSliderValue(newValue);
+  };
   function handleMode() {
     setMode(!mode);
   }
@@ -20,30 +26,30 @@ function App() {
     // Use the ref to play the audio
     audioRef.current.play();
   };
-  useEffect(() => {
-    let interval;
+  // useEffect(() => {
+  //   let interval;
 
-    if (isActive) {
-      interval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
-        } else {
-          if (minutes === 0) {
-            // Timer is up, you can add a sound or other action here
-            playSound();
-            resetTimer();
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
+  //   if (isActive) {
+  //     interval = setInterval(() => {
+  //       if (seconds > 0) {
+  //         setSeconds(seconds - 1);
+  //       } else {
+  //         if (minutes === 0) {
+  //           // Timer is up, you can add a sound or other action here
+  //           playSound();
+  //           resetTimer();
+  //         } else {
+  //           setMinutes(minutes - 1);
+  //           setSeconds(59);
+  //         }
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(interval);
+  //   }
 
-    return () => clearInterval(interval);
-  }, [isActive, minutes, seconds]);
+  //   return () => clearInterval(interval);
+  // }, [isActive, minutes, seconds]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
@@ -51,8 +57,8 @@ function App() {
 
   const resetTimer = () => {
     setIsActive(false);
-    setMinutes(2);
-    setSeconds(0);
+    // setMinutes(25);
+    // setSeconds(0);
     setKey((prevKey) => prevKey + 1);
   };
 
@@ -73,6 +79,7 @@ function App() {
             resetTimer={resetTimer}
             mode={mode}
             key={key}
+            sliderValue={sliderValue}
           />
           <audio ref={audioRef} src={clock} />
 
@@ -81,6 +88,10 @@ function App() {
             toggleTimer={toggleTimer}
             isActive={isActive}
             resetTimer={resetTimer}
+            sliderValue={sliderValue}
+            handleChange={handleChange}
+            minutes={minutes}
+            setMinutes={setMinutes}
           />
         </div>
       </div>

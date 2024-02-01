@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   play_light,
   reset_dark,
@@ -14,8 +15,18 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Slider from "@mui/material/Slider";
+import styled from "styled-components";
 
-const Controls = ({ mode, toggleTimer, isActive, resetTimer }) => {
+const Controls = ({
+  mode,
+  toggleTimer,
+  isActive,
+  resetTimer,
+  sliderValue,
+  handleChange,
+  minutes,
+  setMinutes,
+}) => {
   const control = {
     imgDark: isActive ? pause_dark : play_dark,
     imgLight: isActive ? pause_light : play_light,
@@ -47,14 +58,27 @@ const Controls = ({ mode, toggleTimer, isActive, resetTimer }) => {
             className=" w-full object-contian"
           />
         </button>
-        <TemporaryDrawer mode={mode} />
+        <TemporaryDrawer
+          mode={mode}
+          sliderValue={sliderValue}
+          handleChange={handleChange}
+          minutes={minutes}
+          setMinutes={setMinutes}
+        />
       </div>
     </div>
   );
 };
-export function TemporaryDrawer({ mode }) {
+export function TemporaryDrawer({
+  mode,
+  sliderValue,
+  handleChange,
+  minutes,
+  setMinutes,
+}) {
+  let anchor = "right";
   const [state, setState] = React.useState({
-    left: false,
+    right: true,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -68,25 +92,52 @@ export function TemporaryDrawer({ mode }) {
     setState({ ...state, [anchor]: open });
   };
 
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-      className=" "
-    >
-      <div
-        className={`${
-          mode ? " bg-secondary_light" : " bg-main_dark"
-        } bg-main_color w-full h-[100vh] `}
-      >
-        <DiscreteSlider />
+  function timeApplay() {
+    toggleDrawer(anchor, false);
+  }
+  const styled = {
+    bgColor: "red",
+  };
+  const list = (anchor, sliderValue) => {
+    return (
+      <div>
+        <Box
+          sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+          role="presentation"
+          onKeyDown={toggleDrawer(anchor, false)}
+          className=" "
+        >
+          <div
+            className={`${
+              mode ? " bg-secondary_light" : " bg-main_dark"
+            } bg-main_color w-full h-[100vh] p-3 `}
+          >
+            <div>
+              <DiscreteSlider
+                sliderValue={sliderValue}
+                handleChange={handleChange}
+                style={styled}
+                timeApplay={timeApplay}
+                toggleDrawer={toggleDrawer}
+                anchor={anchor}
+              />
+              <div
+                className="flex justify-end mt-3 "
+                onClick={toggleDrawer(anchor, false)}
+              >
+                <button
+                  onClick={() => setMinutes(sliderValue)}
+                  className=" bg-secondary_color text-red-50 px-3 py-2  font-semibold rounded   "
+                >
+                  Applay
+                </button>
+              </div>
+            </div>
+          </div>
+        </Box>
       </div>
-    </Box>
-  );
-
-  let anchor = "right";
+    );
+  };
 
   return (
     <div className="flex items-center">
@@ -107,7 +158,7 @@ export function TemporaryDrawer({ mode }) {
           open={state[anchor]}
           onClose={toggleDrawer(anchor, false)}
         >
-          {list(anchor)}
+          {list(anchor, sliderValue)}
         </Drawer>
       </React.Fragment>
     </div>
@@ -118,16 +169,66 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export function DiscreteSlider() {
+const PrettoSlider = styled(Slider)({
+  color: "#E63946",
+  height: 8,
+  "& .MuiSlider-track": {
+    border: "none",
+  },
+  "& .MuiSlider-thumb": {
+    height: 24,
+    width: 24,
+    backgroundColor: "#fff",
+    border: "2px solid currentColor",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+      boxShadow: "inherit",
+    },
+    "&::before": {
+      display: "none",
+    },
+  },
+  "& .MuiSlider-valueLabel": {
+    lineHeight: 1.2,
+    fontSize: 13,
+    fontWeight: "bold",
+    background: "unset",
+    padding: 0,
+    width: 32,
+    height: 32,
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#E63946",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&::before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+    },
+    "& > *": {
+      transform: "rotate(45deg)",
+    },
+  },
+});
+
+export function DiscreteSlider({
+  sliderValue,
+  handleChange,
+  minutes,
+  timeApplay,
+  toggleDrawer,
+  anchor,
+}) {
   return (
     <Box sx={{ width: 200, margin: "auto", paddingTop: 20 }}>
       <div className="flex justify-center w-full">
         <div className=" w-full pt-5 flex flex-col items-center justify-center">
           <h1 className=" font-bold text-white">Work</h1>
-          <Slider
-            defaultValue={25}
+          <PrettoSlider
+            defaultValue={sliderValue}
             getAriaValueText={valuetext}
-            valueLabelDisplay="auto"
+            sliderValue={sliderValue}
+            onChange={handleChange}
+            valueLabelDisplay="on"
+            aria-label="pretto slider"
             step={5}
             marks
             min={5}

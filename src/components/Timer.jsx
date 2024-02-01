@@ -9,6 +9,7 @@ const Timer = ({
   isActive,
   resetTimer,
   mode,
+  sliderValue,
 }) => {
   const {
     path,
@@ -21,7 +22,7 @@ const Timer = ({
     strokeWidth,
   } = useCountdown({
     isPlaying: isActive,
-    duration: 120,
+    duration: minutes * 60,
     colors: "#abc",
   });
 
@@ -47,7 +48,7 @@ const Timer = ({
       <div className=" relative">
         <CountdownCircleTimer
           isPlaying={isActive}
-          duration={120}
+          duration={minutes * 60}
           colors={"#E63946"}
           colorsTime={[duration, 0]}
           strokeWidth={15}
