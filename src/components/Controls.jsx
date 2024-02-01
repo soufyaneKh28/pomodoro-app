@@ -129,7 +129,7 @@ export function TemporaryDrawer({
                   onClick={() => setMinutes(sliderValue)}
                   className=" bg-secondary_color text-red-50 px-3 py-2  font-semibold rounded   "
                 >
-                  Applay
+                  Apply
                 </button>
               </div>
             </div>
