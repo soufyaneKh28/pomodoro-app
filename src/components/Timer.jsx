@@ -10,6 +10,7 @@ const Timer = ({
   resetTimer,
   mode,
   sliderValue,
+  playSound,
 }) => {
   const {
     path,
@@ -54,6 +55,7 @@ const Timer = ({
           strokeWidth={15}
           onComplete={() => {
             resetTimer();
+            playSound();
             return { shouldRepeat: true, delay: 1.5 }; // repeat animation in 1.5 seconds
           }}
         >

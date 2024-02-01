@@ -8,7 +8,7 @@ import { clock } from "./assets";
 
 function App() {
   const [mode, setMode] = useState(false);
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(25);
 
   const [key, setKey] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -60,7 +60,7 @@ function App() {
 
   const resetTimer = () => {
     setIsActive(false);
-    playSound();
+
     // setSeconds(0);
     setKey((prevKey) => prevKey + 1);
   };
@@ -82,6 +82,7 @@ function App() {
             mode={mode}
             key={key}
             sliderValue={sliderValue}
+            playSound={playSound}
           />
           <audio ref={audioRef} src={clock} />
 
