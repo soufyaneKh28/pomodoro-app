@@ -9,7 +9,7 @@ import { clock } from "./assets";
 function App() {
   const [mode, setMode] = useState(false);
   const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(false);
+
   const [key, setKey] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -72,7 +72,6 @@ function App() {
         <Header mode={mode} handleMode={handleMode} />
         <div className=" h-[80vh] flex flex-col justify-center">
           <Timer
-            seconds={seconds}
             minutes={minutes}
             toggleTimer={toggleTimer}
             isActive={isActive}

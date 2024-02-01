@@ -4,7 +4,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useCountdown } from "react-countdown-circle-timer";
 const Timer = ({
   minutes,
-  seconds,
+
   toggleTimer,
   isActive,
   resetTimer,
